@@ -3,7 +3,7 @@ from flask import Flask, render_template_string, request, redirect, url_for, ses
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.engine import URL
-
+from sqlalchemy import text
 app = Flask(__name__)
 app.secret_key = 'salam_srca_secure_key_2026'
 

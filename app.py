@@ -33,7 +33,10 @@ USER_CREDENTIALS = {
 class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), nullable=False)
-    title = db.Column(db.String(150), nullable=False)
+    job_title = db.Column(db.String(150), nullable=False)
+    civil_registry = db.Column(db.String(50), nullable=False)
+    code = db.Column(db.String(50), nullable=False)
+    birth_date = db.Column(db.String(50), nullable=False)
     file = db.Column(db.String(255), nullable=False)
 
 class ArchiveItem(db.Model):
@@ -130,49 +133,67 @@ HTML_TEMPLATE = """
             
             <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                 <h3 class="text-lg font-semibold mb-4 text-gray-800">إضافة موظف جديد</h3>
-                <form method="POST" action="/employees/add" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">اسم الموظف</label>
-                        <input type="text" name="name" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-red">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">المسمى الوظيفي</label>
-                        <input type="text" name="title" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-red">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">ارفاق الشهادة / الملف</label>
-                        <input type="file" name="certificate" required class="w-full px-2 py-1.5 border rounded-lg text-sm bg-gray-50">
-                    </div>
-                    <div class="md:col-span-3">
-                        <button type="submit" class="bg-custom-red text-white px-6 py-2 rounded-lg hover-red transition font-semibold">حفظ وإضافة</button>
-                    </div>
-                </form>
+              <form method="POST" action="/employees/add" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">الاسم:</label>
+        <input type="text" name="name" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-red">
+    </div>
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">المسمى الوظيفي:</label>
+        <input type="text" name="job_title" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-red">
+    </div>
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">السجل المدني:</label>
+        <input type="text" name="civil_registry" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-red">
+    </div>
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">الكود:</label>
+        <input type="text" name="code" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-red">
+    </div>
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">تاريخ الميلاد:</label>
+        <input type="date" name="birth_date" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-red">
+    </div>
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">المرفق:</label>
+        <input type="file" name="file" required class="w-full px-2 py-1.5 border rounded-lg text-sm bg-gray-50">
+    </div>
+    <div class="md:col-span-2">
+        <button type="submit" class="bg-custom-red text-white px-6 py-2 rounded-lg hover-red transition font-semibold">إضافة موظف</button>
+    </div>
+</form>
             </div>
 
             <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                 <table class="w-full text-right border-collapse">
-                    <thead>
-                        <tr class="bg-gray-50 border-b border-gray-200 text-gray-700 text-sm">
-                            <th class="p-3">اسم الموظف</th>
-                            <th class="p-3">المسمى الوظيفي</th>
-                            <th class="p-3">الشهادة / المرفق</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100 text-sm">
-                        {% for emp in employees %}
-                        <tr>
-                            <td class="p-3 font-medium">{{ emp.name }}</td>
-                            <td class="p-3 text-gray-600">{{ emp.title }}</td>
-                            <td class="p-3">
-                                <a href="/uploads/{{ emp.file }}" target="_blank" class="text-custom-red hover:underline font-semibold">عرض المرفق 📄</a>
-                            </td>
-                        </tr>
-                        {% else %}
-                        <tr>
-                            <td colspan="3" class="p-6 text-center text-gray-400">لا توجد بيانات موظفين مضافة حتى الآن.</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
+                   <thead>
+    <tr class="bg-gray-50 border-b border-gray-200 text-gray-700 text-sm">
+        <th class="p-3">الاسم</th>
+        <th class="p-3">المسمى الوظيفي</th>
+        <th class="p-3">السجل المدني</th>
+        <th class="p-3">الكود</th>
+        <th class="p-3">تاريخ الميلاد</th>
+        <th class="p-3">المرفق</th>
+    </tr>
+</thead>
+<tbody class="divide-y divide-gray-100 text-sm">
+    {% for emp in employees %}
+    <tr>
+        <td class="p-3 font-medium">{{ emp.name }}</td>
+        <td class="p-3 text-gray-600">{{ emp.job_title }}</td>
+        <td class="p-3 text-gray-600">{{ emp.civil_registry }}</td>
+        <td class="p-3 text-gray-600">{{ emp.code }}</td>
+        <td class="p-3 text-gray-600">{{ emp.birth_date }}</td>
+        <td class="p-3">
+            <a href="/uploads/{{ emp.file }}" target="_blank" class="text-custom-red hover:underline font-semibold">استعراض</a>
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="6" class="p-6 text-center text-gray-400">لا توجد بيانات موظفين مضافة حتى الآن.</td>
+    </tr>
+    {% endfor %}
+</tbody>
                 </table>
             </div>
         </div>

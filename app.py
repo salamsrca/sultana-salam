@@ -47,7 +47,14 @@ class ArchiveItem(db.Model):
 
 with app.app_context():
     db.create_all()
-
+    try:
+        db.session.execute(text('ALTER TABLE employee ADD COLUMN IF NOT EXISTS job_title VARCHAR(150);'))
+        db.session.execute(text('ALTER TABLE employee ADD COLUMN IF NOT EXISTS civil_registry VARCHAR(50);'))
+        db.session.execute(text('ALTER TABLE employee ADD COLUMN IF NOT EXISTS code VARCHAR(50);'))
+        db.session.execute(text('ALTER TABLE employee ADD COLUMN IF NOT EXISTS birth_date VARCHAR(50);'))
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">

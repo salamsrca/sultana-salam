@@ -117,7 +117,7 @@ HTML_TEMPLATE = """
                     <a href="/employees" class="text-custom-red font-semibold text-sm hover:underline">الانتقال للموظفين &larr;</a>
                 </div>
                 <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-custom-red transition">
-                    <h3 class="text-lg font-bold text-custom-red mb-2">📁 الأرشيف المركزي</h3>
+                    <h3 class="text-lg font-bold text-custom-red mb-2">📁 الأرشيف </h3>
                     <p class="text-gray-600 text-sm mb-4">إدارة النماذج، التوكيلات، السيارات، الحوادث، بلاغات خارج النطاق، وأخرى.</p>
                     <a href="/archive" class="text-custom-red font-semibold text-sm hover:underline">الانتقال للأرشيف &larr;</a>
                 </div>

@@ -219,10 +219,15 @@ HTML_TEMPLATE = """
                         <ul class="space-y-2 mb-4 max-h-48 overflow-y-auto">
                             {% set items = archives.get(cat_name, []) %}
                             {% for item in items %}
-                            <li class="text-sm flex justify-between items-center bg-gray-50 p-2 rounded">
-                                <span class="truncate max-w-[140px]" title="{{ item.title }}">{{ item.title }}</span>
-                                <a href="/uploads/{{ item.file }}" target="_blank" class="text-custom-red hover:underline text-xs font-semibold">استعراض</a>
-                            </li>
+                         <li class="text-sm flex justify-between items-center bg-gray-50 p-2 rounded">
+    <span class="truncate max-w-[140px]" title="{{ item.title }}">{{ item.title }}</span>
+    <div class="flex items-center gap-2">
+        <a href="/uploads/{{ item.file }}" target="_blank" class="text-custom-red hover:underline font-semibold">استعراض</a>
+        <form action="{{ url_for('delete_archive', id=item.id) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');" style="display:inline;">
+            <button type="submit" class="text-red-600 hover:text-red-800 text-xs font-semibold bg-transparent border-0 cursor-pointer">حذف</button>
+        </form>
+    </div>
+</li>
                             {% else %}
                             <li class="text-xs text-gray-400 text-center py-4">القسم فارغ</li>
                             {% endfor %}
@@ -321,6 +326,17 @@ def add_archive():
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
+@app.route('/archive/delete/<int:id>', methods=['POST'])
+def delete_archive(id):
+    if 'logged_in' not in session:
+        return redirect(url_for('index'))
+    item = ArchiveItem.query.get_or_404(id)
+    if item.file:
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], item.file)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+    db.session.delete(item)
+    db.session.commit()
+    return redirect(url_for('archive_page'))
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

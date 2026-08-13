@@ -1,2 +1,0 @@
-Flask3.0.2
-Werkzeug3.0.1

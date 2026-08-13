@@ -7,11 +7,7 @@ app = Flask(__name__)
 app.secret_key = 'salam_srca_secure_key_2026'
 
 # إعداد قاعدة البيانات الدائمة
-database_url = os.environ.get('DATABASE_URL')
-if database_url and database_url.startswith("postgres://"):
-    database_url = database_url.replace("postgres://", "postgresql://", 1)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = database_url or 'sqlite:///local.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres%2Epfrqplchfsgwxqmeixql:srca89@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)

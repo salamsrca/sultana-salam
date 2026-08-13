@@ -227,35 +227,36 @@ HTML_TEMPLATE = """
                         <th class="p-3">العمليات</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 text-sm">
-                    {% for emp in employees %}
-                    <tr>
-                        <td class="p-3 font-medium">{{ emp.name }}</td>
-                        <td class="p-3 text-gray-600">{{ emp.job_title }}</td>
-                        <td class="p-3 text-gray-600">{{ emp.civil_registry }}</td>
-                        <td class="p-3 text-gray-600">{{ emp.code }}</td>
-                        <td class="p-3 text-gray-600">{{ emp.birth_date }}</td>
-                        <td class="p-3">
-                            <div class="flex flex-wrap gap-1">
-                                {% if emp.file1 %}<a href="/uploads/{{ emp.file1 }}" target="_blank" class="text-custom-red hover:underline font-semibold text-xs bg-red-50 px-2 py-1 rounded">مرفق 1</a>{% endif %}
-                                {% if emp.file2 %}<a href="/uploads/{{ emp.file2 }}" target="_blank" class="text-custom-red hover:underline font-semibold text-xs bg-red-50 px-2 py-1 rounded">مرفق 2</a>{% endif %}
-                                {% if emp.file3 %}<a href="/uploads/{{ emp.file3 }}" target="_blank" class="text-custom-red hover:underline font-semibold text-xs bg-red-50 px-2 py-1 rounded">مرفق 3</a>{% endif %}
-                                {% if emp.file4 %}<a href="/uploads/{{ emp.file4 }}" target="_blank" class="text-custom-red hover:underline font-semibold text-xs bg-red-50 px-2 py-1 rounded">مرفق 4</a>{% endif %}
-                                {% if emp.file5 %}<a href="/uploads/{{ emp.file5 }}" target="_blank" class="text-custom-red hover:underline font-semibold text-xs bg-red-50 px-2 py-1 rounded">مرفق 5</a>{% endif %}
-                            </div>
-                        </td>
-                        <td class="p-3">
-                            <form action="/delete/{{ emp.id }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا الموظف؟');">
-                                <button type="submit" class="text-white bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-xs font-semibold">حذف</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% else %}
-    {% else %}
+                {% if employees %}
+    {% for emp in employees %}
     <tr>
-        <td colspan="6" class="p-6 text-center text-gray-400">لا توجد بيانات موظفين مضافة حتى الآن.</td>
+        <td class="p-3 font-medium">{{ emp.name }}</td>
+        <td class="p-3 text-gray-600">{{ emp.job_title }}</td>
+        <td class="p-3 text-gray-600">{{ emp.civil_registry }}</td>
+        <td class="p-3 text-gray-600">{{ emp.code }}</td>
+        <td class="p-3 text-gray-600">{{ emp.birth_date }}</td>
+        <td class="p-3">
+            <div class="flex flex-wrap gap-1">
+                {% if emp.file1 %}<a href="/uploads/{{ emp.file1 }}" target="_blank" class="text-custom-red hover:underline font-semibold text-xs bg-red-50 px-2 py-1 rounded">مرفق 1</a>{% endif %}
+                {% if emp.file2 %}<a href="/uploads/{{ emp.file2 }}" target="_blank" class="text-custom-red hover:underline font-semibold text-xs bg-red-50 px-2 py-1 rounded">مرفق 2</a>{% endif %}
+                {% if emp.file3 %}<a href="/uploads/{{ emp.file3 }}" target="_blank" class="text-custom-red hover:underline font-semibold text-xs bg-red-50 px-2 py-1 rounded">مرفق 3</a>{% endif %}
+                {% if emp.file4 %}<a href="/uploads/{{ emp.file4 }}" target="_blank" class="text-custom-red hover:underline font-semibold text-xs bg-red-50 px-2 py-1 rounded">مرفق 4</a>{% endif %}
+                {% if emp.file5 %}<a href="/uploads/{{ emp.file5 }}" target="_blank" class="text-custom-red hover:underline font-semibold text-xs bg-red-50 px-2 py-1 rounded">مرفق 5</a>{% endif %}
+            </div>
+        </td>
+        <td class="p-3">
+            <form action="/delete/{{ emp.id }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا الموظف؟');">
+                <button type="submit" class="text-white bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-xs font-semibold">حذف</button>
+            </form>
+        </td>
     </tr>
     {% endfor %}
+{% else %}
+<tr>
+    <td colspan="7" class="p-6 text-center text-gray-400">لا توجد بيانات موظفين مضافة حتى الآن.</td>
+</tr>
+{% endif %}
+</tbody>
 </tbody>
                 </table>
             </div>

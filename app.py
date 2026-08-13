@@ -2,14 +2,23 @@ import os
 from flask import Flask, render_template_string, request, redirect, url_for, session, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.engine import URL
 
 app = Flask(__name__)
 app.secret_key = 'salam_srca_secure_key_2026'
 
 # إعداد قاعدة البيانات الدائمة
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres%2Epfrqplchfsgwxqmeixql:srca89@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db_url = URL.create(
+    drivername="postgresql",
+    username="postgres.pfrqplchfsgwxqmeixql",
+    password="srca89",
+    host="aws-0-ap-northeast-1.pooler.supabase.com",
+    port=6543,
+    database="postgres"
+)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 UPLOAD_FOLDER = 'uploads'

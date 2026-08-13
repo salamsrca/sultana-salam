@@ -179,7 +179,7 @@ HTML_TEMPLATE = """
 
         {% elif active_tab == 'archive' %}
         <div class="space-y-6">
-            <h2 class="text-2xl font-bold text-custom-red">الأرشيف المركزي</h2>
+            <h2 class="text-2xl font-bold text-custom-red">الأرشيف</h2>
 
             <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                 <h3 class="text-lg font-semibold mb-4 text-gray-800">إضافة ملف للأرشيف</h3>
